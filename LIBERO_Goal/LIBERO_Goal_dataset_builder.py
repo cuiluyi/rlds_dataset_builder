@@ -82,7 +82,7 @@ def _generate_examples(paths) -> Iterator[Tuple[str, Any]]:
             yield ret
 
 
-class LIBEROGoal(MultiThreadedDatasetBuilder):
+class LiberoGoal(MultiThreadedDatasetBuilder):
     """DatasetBuilder for example dataset."""
 
     VERSION = tfds.core.Version('1.0.0')
@@ -163,5 +163,5 @@ class LIBEROGoal(MultiThreadedDatasetBuilder):
     def _split_paths(self):
         """Define filepaths for data splits."""
         return {
-            "train": glob.glob("/PATH/TO/LIBERO/libero/datasets/libero_goal_no_noops/*.hdf5"),
+            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_goal_no_noops/*.hdf5"),
         }

@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import sys
-from LIBERO_Object.conversion_utils import MultiThreadedDatasetBuilder
+from LIBERO_90.conversion_utils import MultiThreadedDatasetBuilder
 
 
 def _generate_examples(paths) -> Iterator[Tuple[str, Any]]:
@@ -66,7 +66,7 @@ def _generate_examples(paths) -> Iterator[Tuple[str, Any]]:
         }
 
         # if you want to skip an example for whatever reason, simply return None
-        return episode_path + f"_{demo_id}", sample
+        return hash(episode_path + f"_{demo_id}"), sample
 
     # for smallish datasets, use single-thread parsing
     for sample in paths:
@@ -82,15 +82,15 @@ def _generate_examples(paths) -> Iterator[Tuple[str, Any]]:
             yield ret
 
 
-class LiberoObject(MultiThreadedDatasetBuilder):
+class Libero90(MultiThreadedDatasetBuilder):
     """DatasetBuilder for example dataset."""
 
     VERSION = tfds.core.Version('1.0.0')
     RELEASE_NOTES = {
       '1.0.0': 'Initial release.',
     }
-    N_WORKERS = 40             # number of parallel workers for data conversion
-    MAX_PATHS_IN_MEMORY = 80   # number of paths converted & stored in memory before writing to disk
+    N_WORKERS = 5             # number of parallel workers for data conversion
+    MAX_PATHS_IN_MEMORY = 5   # number of paths converted & stored in memory before writing to disk
                                # -> the higher the faster / more parallel conversion, adjust based on avilable RAM
                                # note that one path may yield multiple episodes and adjust accordingly
     PARSE_FCN = _generate_examples      # handle to parse function from file paths to RLDS episodes
@@ -158,10 +158,12 @@ class LiberoObject(MultiThreadedDatasetBuilder):
                         doc='Path to the original data file.'
                     ),
                 }),
-            }))
+            }),
+            disable_shuffling=True,
+        )
 
     def _split_paths(self):
         """Define filepaths for data splits."""
         return {
-            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_object_no_noops/*.hdf5"),
+            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_90_no_noops/*.hdf5"),
         }
