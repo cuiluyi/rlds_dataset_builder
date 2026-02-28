@@ -102,13 +102,13 @@ class Libero90(MultiThreadedDatasetBuilder):
                 'steps': tfds.features.Dataset({
                     'observation': tfds.features.FeaturesDict({
                         'image': tfds.features.Image(
-                            shape=(256, 256, 3),
+                            shape=(128, 128, 3),
                             dtype=np.uint8,
                             encoding_format='jpeg',
                             doc='Main camera RGB observation.',
                         ),
                         'wrist_image': tfds.features.Image(
-                            shape=(256, 256, 3),
+                            shape=(128, 128, 3),
                             dtype=np.uint8,
                             encoding_format='jpeg',
                             doc='Wrist camera RGB observation.',
@@ -165,5 +165,5 @@ class Libero90(MultiThreadedDatasetBuilder):
     def _split_paths(self):
         """Define filepaths for data splits."""
         return {
-            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_90_no_noops/*.hdf5"),
+            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_90/*.hdf5"),
         }

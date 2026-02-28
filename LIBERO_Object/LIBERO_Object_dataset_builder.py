@@ -82,7 +82,7 @@ def _generate_examples(paths) -> Iterator[Tuple[str, Any]]:
             yield ret
 
 
-class LiberoObject(MultiThreadedDatasetBuilder):
+class LIBEROObject(MultiThreadedDatasetBuilder):
     """DatasetBuilder for example dataset."""
 
     VERSION = tfds.core.Version('1.0.0')
@@ -102,13 +102,13 @@ class LiberoObject(MultiThreadedDatasetBuilder):
                 'steps': tfds.features.Dataset({
                     'observation': tfds.features.FeaturesDict({
                         'image': tfds.features.Image(
-                            shape=(256, 256, 3),
+                            shape=(128, 128, 3),
                             dtype=np.uint8,
                             encoding_format='jpeg',
                             doc='Main camera RGB observation.',
                         ),
                         'wrist_image': tfds.features.Image(
-                            shape=(256, 256, 3),
+                            shape=(128, 128, 3),
                             dtype=np.uint8,
                             encoding_format='jpeg',
                             doc='Wrist camera RGB observation.',
@@ -163,5 +163,5 @@ class LiberoObject(MultiThreadedDatasetBuilder):
     def _split_paths(self):
         """Define filepaths for data splits."""
         return {
-            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_object_no_noops/*.hdf5"),
+            "train": glob.glob("/data/cuiluyi/resources/datasets/LIBERO/libero_object/*.hdf5"),
         }
